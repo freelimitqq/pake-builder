@@ -23,15 +23,14 @@ jobs:
         run: pnpm install -g pake-cli
       - name: Build with Pake
         run: |
-          pake https://cn.tradingview.com/chart/ `
-            --name view `
+          pake https://www.bilibili.com `
+            --name bilibili `
             --width 1280 `
-            --height 800 `
-            --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            --height 800
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: view-windows
+          name: bilibili-windows
           path: |
             *.exe
             *.msi

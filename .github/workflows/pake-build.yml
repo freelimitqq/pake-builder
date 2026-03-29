@@ -1,0 +1,43 @@
+name: Build Pake App (Windows)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: latest
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install pake-cli
+        run: pnpm install -g pake-cli
+
+      - name: Build with Pake
+        run: |
+          pake https://cn.tradingview.com/chart/ `
+            --name view `
+            --width 1280 `
+            --height 800
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: view-windows
+          path: |
+            *.exe
+            *.msi
+          if-no-files-found: warn
